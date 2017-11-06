@@ -157,6 +157,43 @@ y_concentric_origin_offset=0.0; // [-120.0:120.0]
 // Z concentric origin offset
 z_concentric_origin_offset=0.0; // [-120.0:120.0]
 
+/* [Spiralize] */
+
+// Object design has spiral regular polygons
+has_spiral_regular_polygons = "no"; // [yes, no]
+
+//Spiral with regular polygon sides number. 
+spiral_polygon_sides=6; // [3:100]
+
+//Spiral with regular polygon sides number.
+interior_spiral_polygon_sides=6; // [3:100]
+
+// Spiral polygons number
+spiral_polygons_number=20; // [1:200]
+
+// Spiral polygon width (mm)
+spiral_polygon_frame_width=2; // [1:200]
+
+// Spiral polygon X axis angle 
+spiral_polygon_x_angle = 0;  // [0:359]
+
+// Spiral polygon Y axis angle 
+spiral_polygon_y_angle = 0;  // [0:359]
+
+// Spiral polygon Z axis angle 
+spiral_polygon_z_angle = 60;  // [0:359]
+
+// Slice offset
+spiral_slice_offset = 2; // [1:100]
+
+// X spiral origin offset
+x_spiral_origin_offset=0.0; // [-120.0:120.0]
+
+// Y spiral origin offset
+y_spiral_origin_offset=0.0; // [-120.0:120.0]
+
+// Z spiral origin offset
+z_spiral_origin_offset=0.0; // [-120.0:120.0]
 
 /* [Text] */
 
@@ -190,7 +227,7 @@ min_layer_height=0.4;
           }
        } // if
        
-       if(has_image == "yes" || has_horizontal_lines == "yes" || has_vertical_lines == "yes" || has_concentric_regular_polygons == "yes") {
+       if(has_image == "yes" || has_horizontal_lines == "yes" || has_vertical_lines == "yes" || has_concentric_regular_polygons == "yes" || has_spiral_regular_polygons == "yes") {
           intersection(){
              cylinder(h=height,r=size_side,$fn=polygon_sides);
            
@@ -227,6 +264,17 @@ min_layer_height=0.4;
                               }                       
                      } // for  
                 } // if 
+
+                if(has_spiral_regular_polygons == "yes"){
+                   for(i=[1:spiral_polygons_number]){
+                      rotate([spiral_polygon_x_angle,spiral_polygon_y_angle,spiral_polygon_z_angle*i])
+                         translate([(i*spiral_polygon_frame_width+spiral_slice_offset)+x_spiral_origin_offset,y_spiral_origin_offset,z_spiral_origin_offset])
+                            difference(){
+                               cylinder(h=height,r=i+spiral_polygon_frame_width,$fn=spiral_polygon_sides);
+                               cylinder(h=height,r=i,$fn=interior_spiral_polygon_sides);
+                            }
+                   } // for
+                } // if
              } // union
           } // intersection
        } // if
