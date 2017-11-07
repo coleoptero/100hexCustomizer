@@ -37,6 +37,13 @@ polygon_frame_width=2; // [1:200]
 // Interior regular polygon sides number. (If you want to create a 100hex object don't change this parameter.)
 interior_polygon_sides=6; // [3:100]
 
+/* [TemplateSurface Picture] */
+
+// Create a separator template for 100hex object. You must set 'has_frame' property to "no".
+has_separator_template = "no"; // [yes, no]
+
+// Separator Template width (mm)  (It's a parameter for 100hex objects only)
+separator_width = 15; // [2:100]
 
 /* [Surface Picture] */
 
@@ -323,7 +330,8 @@ min_layer_height=0.4;
           }
        } // if
        
-       if(has_image == "yes" || has_horizontal_lines == "yes" || has_vertical_lines == "yes" || has_concentric_regular_polygons == "yes" || has_spiral_regular_polygons == "yes" || has_font == "yes") {
+       if(has_image == "yes" || has_horizontal_lines == "yes" || has_vertical_lines == "yes" || has_concentric_regular_polygons == "yes" || has_spiral_regular_polygons == "yes" || has_font == "yes" || 
+           has_separator_template == "yes") {
           intersection(){
              cylinder(h=height,r=size_side,$fn=polygon_sides);
            
@@ -390,6 +398,12 @@ min_layer_height=0.4;
                         
                 } // if 
                 
+                if(has_separator_template == "yes"){
+                         blade(0);
+                         blade(120);
+                         blade(240);
+                } // if 
+                
              } // union
           } // intersection
        } // if
@@ -418,6 +432,12 @@ module segment(){
            cylinder(h=height, r=(size_side/6)/2, $fn=100, center=true);
     } // union    
 } // module
+
+module blade(rotate_angle){
+   rotate([0,0,rotate_angle])
+      translate([0,size_side/4,0])
+         cube([separator_width,size_side/2,height], center=true);
+}
 
 
 my_100hex();
