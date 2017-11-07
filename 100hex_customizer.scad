@@ -32,7 +32,7 @@ height=2; // [1:100]
 has_frame = "yes"; // [yes, no]
 
 // Polygon frame width (mm)
-polygon_frame_width=4; // [1:200]
+polygon_frame_width=2; // [1:200]
 
 // Interior regular polygon sides number. (If you want to create a 100hex object don't change this parameter.)
 interior_polygon_sides=6; // [3:100]
@@ -195,6 +195,102 @@ y_spiral_origin_offset=0.0; // [-120.0:120.0]
 // Z spiral origin offset
 z_spiral_origin_offset=0.0; // [-120.0:120.0]
 
+
+/* [Font] */
+
+/*
+// Segment position = index of element in vector (typo).
+//
+//                   0
+//            ---------------
+//         /  \      |      /  \
+//        /    \ 7   | 8   /    \
+//    5  /      \    |    /      \  1
+//      /        \   |   / 9      \
+//     /    6     \  |  /    10    \
+//     -------------   -------------
+//     \          /  |  \          /
+//      \        /   |   \ 11     /      
+//    4  \      /    |    \      /  2      
+//        \    /13   | 12  \    /      
+//         \  /      |      \  /      
+//            ---------------
+//                   3
+*/
+
+
+// 100hex typo design
+has_font = "no";  // [yes,no]
+
+// segment 0 
+segment0 = 0; // [[0],[1]]
+// segment 1
+segment1 = 0; // [[0],[1]]
+// segment 2
+segment2 = 0; // [[0],[1]]
+// segment 3
+segment3 = 0; // [[0],[1]]
+// segment 4
+segment4 = 0; // [[0],[1]]
+// segment 5
+segment5 = 0; // [[0],[1]]
+// segment 6
+segment6 = 1; // [[0],[1]]
+// segment 7
+segment7 = 1; // [[0],[1]]
+// segment 8
+segment8 = 0; // [[0],[1]]
+// segment 9
+segment9 = 1; // [[0],[1]]
+// segment 10
+segment10 = 1; // [[0],[1]]
+// segment 11
+segment11 = 1; // [[0],[1]]
+// segment 12
+segment12 = 0; // [[0],[1]]
+// segment 13
+segment13 = 1; // [[0],[1]]
+
+typo = [segment0, segment1, segment2, segment3, segment4, segment5, segment6, segment7, segment8, segment9, segment10, segment11, segment12, segment13];
+
+/*
+// Uncoment single typo definition line 
+
+//typo = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // none_typo
+//typo = [1,1,1,1,1,1,1,1,1,1,1,1,1,1]; // test
+//typo = [1,1,1,1,1,1,0,0,1,0,0,0,0,0]; // power
+
+//typo = [1,1,1,1,1,1,0,0,0,1,0,0,0,1]; // 0
+//typo = [0,0,0,0,0,0,0,0,1,0,0,0,1,0]; // 1
+//typo = [1,1,0,1,1,0,1,0,0,0,1,0,0,0]; // 2
+//typo = [1,1,1,1,0,0,1,0,0,0,1,0,0,0]; // 3
+//typo = [0,1,1,0,0,1,1,0,0,0,1,0,0,0]; // 4
+//typo = [1,0,1,1,0,1,1,0,0,0,1,0,0,0]; // 5
+//typo = [1,0,1,1,1,1,1,0,0,0,1,0,0,0]; // 6
+//typo = [1,0,0,0,0,0,0,0,0,1,0,0,1,0]; // 7
+//typo = [1,1,1,1,1,1,1,0,0,0,1,0,0,0]; // 8
+//typo = [1,1,1,1,0,1,1,0,0,0,1,0,0,0]; // 9
+//typo = [1,1,1,0,1,1,1,0,0,0,1,0,0,0]; // A
+//typo = [1,1,1,1,0,0,0,0,1,0,1,0,1,0]; // B
+//typo = [1,0,0,1,1,1,0,0,0,0,0,0,0,0]; // C
+//typo = [1,1,1,1,0,0,0,0,1,0,0,0,1,0]; // D
+//typo = [1,0,0,1,1,1,1,0,0,0,1,0,0,0]; // E  //version 1
+//typo = [1,0,0,1,1,1,1,0,0,0,0,0,0,0]; // E  //version 2 
+//typo = [1,0,0,1,0,0,0,1,0,0,1,0,0,1]; // E  //version 3
+//typo = [1,0,0,0,1,1,1,0,0,0,1,0,0,0]; // F  //version 1
+//typo = [1,0,0,0,1,1,1,0,0,0,0,0,0,0]; // F  //version 2 
+//typo = [1,0,0,0,0,0,0,1,0,0,1,0,0,1]; // F  //version 3
+
+// Define other typos here
+// ...typo[13] = 0; // [0:1]
+
+
+// See typo aspect when:
+//        has_horizontal_lines ="yes"; // [yes,no]
+//        horizontal_lines_number = 40; // [1:200]
+//        horizontal_line_z_angle = 60; // [0:359]
+*/
+
 /* [Text] */
 
 text_line_1 = "";
@@ -227,7 +323,7 @@ min_layer_height=0.4;
           }
        } // if
        
-       if(has_image == "yes" || has_horizontal_lines == "yes" || has_vertical_lines == "yes" || has_concentric_regular_polygons == "yes" || has_spiral_regular_polygons == "yes") {
+       if(has_image == "yes" || has_horizontal_lines == "yes" || has_vertical_lines == "yes" || has_concentric_regular_polygons == "yes" || has_spiral_regular_polygons == "yes" || has_font == "yes") {
           intersection(){
              cylinder(h=height,r=size_side,$fn=polygon_sides);
            
@@ -275,6 +371,25 @@ min_layer_height=0.4;
                             }
                    } // for
                 } // if
+                
+                if(has_font == "yes"){
+                    if(typo[0] == 1) translate([0,(size_side-(size_side/6)-3),height/2]) segment();
+                    if(typo[1] == 1) rotate([0,0,120]) translate([0,-(size_side-(size_side/6)-3),height/2]) segment();
+                    if(typo[2] == 1) rotate([0,0,60]) translate([0,-(size_side-(size_side/6)-3),height/2]) segment();
+                    if(typo[3] == 1) translate([0,-(size_side-(size_side/6)-3),height/2]) segment();
+                    if(typo[4] == 1) rotate([0,0,120]) translate([0,(size_side-(size_side/6)-3),height/2]) segment();
+                    if(typo[5] == 1) rotate([0,0,60]) translate([0,(size_side-(size_side/6)-3),height/2]) segment();
+                    if(typo[6] == 1) translate([-(size_side/2),0,height/2]) segment();
+                    if(typo[7] == 1) rotate([0,0,120]) translate([(size_side/2),0,height/2]) segment();
+                    if(typo[8] == 1) rotate([0,0,90]) translate([(size_side/2),0,height/2]) segment();
+                    if(typo[9] == 1) rotate([0,0,60]) translate([(size_side/2),0,height/2]) segment();
+                    if(typo[10] == 1) translate([(size_side/2),0,height/2]) segment();
+                    if(typo[11] == 1) rotate([0,0,-60]) translate([(size_side/2),0,height/2]) segment();
+                    if(typo[12] == 1) rotate([0,0,-90]) translate([(size_side/2),0,height/2]) segment();
+                    if(typo[13] == 1) rotate([0,0,-120]) translate([(size_side/2),0,height/2]) segment();
+                        
+                } // if 
+                
              } // union
           } // intersection
        } // if
@@ -292,6 +407,18 @@ min_layer_height=0.4;
    } // union     
 
 }
+
+
+module segment(){
+    union(){
+        cube([size_side-(size_side/6),size_side/6,height], center=true);
+        translate([-(size_side-(size_side/6))/2,0,0])
+           cylinder(h=height, r=(size_side/6)/2, $fn=100, center=true);
+        translate([(size_side-(size_side/6))/2,0,0])
+           cylinder(h=height, r=(size_side/6)/2, $fn=100, center=true);
+    } // union    
+} // module
+
 
 my_100hex();
 
